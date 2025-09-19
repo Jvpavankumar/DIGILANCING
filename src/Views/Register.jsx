@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import { API_BASE } from "../apiBase";
 import {
   setStep,
   setReferral,
@@ -155,7 +156,7 @@ const Register = () => {
   };
   const verifyPayment = async ({ razorpay_order_id, status }) => {
     try {
-      const res = await fetch("/api/payment/Verify", {
+      const res = await fetch(`${API_BASE}/payment/Verify`, {  
         method: "POST",
         headers: {
           "Content-Type": "application/json",

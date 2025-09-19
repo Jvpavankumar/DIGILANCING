@@ -7,13 +7,6 @@ export default defineConfig({
   server: {
     host: true,
     port: 5173,
-    proxy: {
-      "/api": {
-        target: "https://eduriches-backend-398940408354.europe-west1.run.app", 
-        changeOrigin: true,
-        secure: true,
-        rewrite: (path) => path.replace(/^\/api/, "/api/v_1"), 
-      },
-    },
+    
   },
 });

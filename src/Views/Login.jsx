@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import loginImage from '../assets/login.svg'; // Your image
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE } from "../apiBase";
 const wrapperVariants = {
     hidden: { opacity: 0, y: 40 },
     show: {
@@ -43,7 +44,7 @@ const Login = () => {
 
         console.log("Login data:", formData);
 
-        fetch("/api/users/login", {
+        fetch(`${API_BASE}/users/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),

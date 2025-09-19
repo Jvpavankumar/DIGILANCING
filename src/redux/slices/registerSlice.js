@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { API_BASE } from "../../apiBase";
 export const verifyReferral = createAsyncThunk(
   "register/verifyReferral",
   async (referral, { rejectWithValue }) => {
     try {
-      const response = await fetch(`/api/users/verifyreferral/${referral}`);
+      const response = await fetch(`${API_BASE}/users/verifyreferral/${referral}`);
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Invalid referral code");
       return data;
@@ -18,7 +18,7 @@ export const registerAndPay = createAsyncThunk(
   "register/registerAndPay",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await fetch("/api/users/register-and-pay", {
+       const response = await fetch(`${API_BASE}/users/register-and-pay`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
