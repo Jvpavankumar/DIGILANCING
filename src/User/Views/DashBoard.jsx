@@ -17,7 +17,7 @@ const DashBoard = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.clear();  
-    navigate("/login");
+    navigate("/");
 };
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },

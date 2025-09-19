@@ -37,7 +37,7 @@ const AuthGuard = ({ children }) => {
   }, [navigate]);
   if (loading) {
     return (
-     <div className="flex items-center justify-center w-full h-screen bg-gray-100">
+      <div className="flex items-center justify-center w-full h-screen bg-gray-100">
         <div className="border-t-4 border-blue-500 border-solid rounded-full w-16 h-16 animate-spin"></div>
       </div>
     );
@@ -67,7 +67,7 @@ function App() {
         <Route path="/VerifyOtp" element={<><Header /><VerifyOtp /></>} />
         <Route path="/ResetPassword" element={<><Header /><ResetPassword /></>} />
 
-        
+
         <Route path="/DashBoard" element={<><AuthGuard><DashBoard /></AuthGuard></>} />
         <Route path="/AffiliatePanel" element={<><AuthGuard><AffiliatePanel /></AuthGuard></>} />
         <Route path="/Offers" element={<><AuthGuard><Offers /></AuthGuard></>} />

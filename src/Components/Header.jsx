@@ -74,11 +74,16 @@ const Header = ({ isDarkMode }) => {
     setIsLoggedIn(!!token);
   }, []);
   const user = JSON.parse(sessionStorage.getItem("user") || "null");
-  const name = user?.fullname
-  const email = user?.email
+
+  const [name, setName] = useState(user?.fullname || "");
+  const [email, setEmail] = useState(user?.email || "");
 
   const handleLogout = () => {
     sessionStorage.clear();
+    setIsLoggedIn(false);
+    setMobileOpen(false);
+    setName("");
+    setEmail("");
     navigate("/");
   };
   return (
@@ -88,8 +93,8 @@ const Header = ({ isDarkMode }) => {
           initial={false}
           animate={{
             backgroundColor: scrolled
-              ? "rgba(255,255,255,0.95)" 
-              : "rgba(255,255,255,0)", 
+              ? "rgba(255,255,255,0.95)"
+              : "rgba(255,255,255,0)",
             boxShadow: scrolled
               ? "0 2px 10px rgba(0,0,0,0.1)"
               : "0px 0px 0px rgba(0,0,0,0)",
@@ -188,7 +193,7 @@ const Header = ({ isDarkMode }) => {
               </div>
             </div>
 
-           
+
           </div>
         </motion.div>
       ) : isForgotPassword ? (
@@ -296,7 +301,7 @@ const Header = ({ isDarkMode }) => {
               </div>
             </div>
 
-          
+
           </div>
         </motion.div>
       ) : isResetPassword ? (
@@ -353,8 +358,8 @@ const Header = ({ isDarkMode }) => {
           initial={false}
           animate={{
             backgroundColor: scrolled
-              ? "rgba(255,255,255,0.95)" 
-              : "rgba(255,255,255,0)", 
+              ? "rgba(255,255,255,0.95)"
+              : "rgba(255,255,255,0)",
             boxShadow: scrolled
               ? "0 2px 10px rgba(0,0,0,0.1)"
               : "0px 0px 0px rgba(0,0,0,0)",
@@ -589,8 +594,9 @@ const Header = ({ isDarkMode }) => {
                 </div>
               </div>
 
-              {/* Mobile Menu Links */}
+              {/* Mobile Menu + Auth Section */}
               <div className="flex-1 flex flex-col gap-2 overflow-y-auto pt-6 p-2">
+
                 {/* Always visible links */}
                 <div
                   className="flex justify-between items-center px-4 py-4 rounded-2xl bg-[#F4FAFF] cursor-pointer"
@@ -611,7 +617,7 @@ const Header = ({ isDarkMode }) => {
                   <span className="text-base sm:text-lg font-semibold">Courses</span>
                 </div>
 
-                {/* Conditional Links for Logged-in Users */}
+                {/* Conditional Links */}
                 {isLoggedIn ? (
                   <>
                     <div
@@ -639,14 +645,12 @@ const Header = ({ isDarkMode }) => {
                     {menuItems.map(({ label, dropdown }) => (
                       <div key={label}>
                         <div
-                          className={`flex justify-between items-center px-4 py-4 bg-[#F4FAFF] cursor-pointer ${expandedSection === label ? 'rounded-t-xl' : 'rounded-xl'
-                            }`}
+                          className={`flex justify-between items-center px-4 py-4 bg-[#F4FAFF] cursor-pointer ${expandedSection === label ? 'rounded-t-xl' : 'rounded-xl'}`}
                           onClick={() => toggleSection(label)}
                         >
                           <span className="text-base sm:text-lg font-semibold">{label}</span>
                           <FaChevronDown
-                            className={`transition-transform duration-300 ${expandedSection === label ? 'rotate-180' : ''
-                              }`}
+                            className={`transition-transform duration-300 ${expandedSection === label ? 'rotate-180' : ''}`}
                           />
                         </div>
                         {expandedSection === label && (
@@ -688,53 +692,47 @@ const Header = ({ isDarkMode }) => {
                     </div>
                   </>
                 )}
-              </div>
+                <div className="flex flex-col gap-4 border-t pt-4 px-2">
+                  {isLoggedIn ? (
+                    <>
+                      {/* Profile Card */}
+                      <div className="flex items-center gap-3 bg-[#F4FAFF] px-3 py-2 rounded-xl">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-[#0183FF] text-white font-bold rounded-full text-sm sm:text-base">
+                          {name?.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="font-medium text-black text-[14px] sm:text-[15px]">{name}</span>
+                          <span className="text-[12px] sm:text-[13px] text-gray-500">{email}</span>
+                        </div>
+                      </div>
 
-              {/* Bottom Section */}
-              <div className="mt-auto flex flex-col gap-4 border-t pt-4 px-2 mb-5">
-                {isLoggedIn ? (
-                  <>
-                    {/* Profile Card */}
-                    <div className="flex items-center gap-3 bg-[#F4FAFF] px-3 py-2 rounded-xl">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-[#0183FF] text-white font-bold rounded-full text-sm sm:text-base">
-                        {name?.charAt(0).toUpperCase()}
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="font-medium text-black text-[14px] sm:text-[15px]">{name}</span>
-                        <span className="text-[12px] sm:text-[13px] text-gray-500">{email}</span>
-                      </div>
+                      {/* Logout Button */}
+                      <button
+                       onClick={handleLogout}
+                        className="w-full bg-[#0183FF] text-white py-2 rounded-xl font-semibold text-sm sm:text-base"
+                      >
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <div className="flex gap-2">
+                      <Link
+                        to="/login"
+                        className="flex-1 text-center text-sm sm:text-[16px] font-outfit hover:bg-white hover:text-black px-4 sm:px-6 border border-[#a8a8a8] py-2.5 rounded-xl text-black"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        Login
+                      </Link>
+                      <Link
+                        to="/Register"
+                        className="flex-1 text-center bg-[#0183FF] py-2.5 font-outfit rounded-xl text-white text-sm sm:text-[16px]"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        Register
+                      </Link>
                     </div>
-
-                    {/* Logout Button */}
-                    <button
-                      onClick={() => {
-                        sessionStorage.clear();
-                        navigate('/');
-                        setMobileOpen(false);
-                      }}
-                      className="w-full bg-[#0183FF] text-white py-2 rounded-xl font-semibold text-sm sm:text-base"
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <div className="flex gap-2">
-                    <Link
-                      to="/login"
-                      className="flex-1 text-center text-sm sm:text-[16px] font-outfit hover:bg-white hover:text-black px-4 sm:px-6 border border-[#a8a8a8] py-2.5 rounded-xl text-black"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      to="/Register"
-                      className="flex-1 text-center bg-[#0183FF] py-2.5 font-outfit rounded-xl text-white text-sm sm:text-[16px]"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      Register
-                    </Link>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           )}
