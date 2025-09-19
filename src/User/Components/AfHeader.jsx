@@ -29,7 +29,7 @@ const AfHeader = () => {
     setLoading(true);
     setTimeout(() => {
       sessionStorage.clear();
-      navigate("/login");
+      navigate("/");
     }, 2000); // 2 seconds loader delay
   };
   return (
