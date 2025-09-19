@@ -79,7 +79,7 @@ const Header = ({ isDarkMode }) => {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    navigate("/login");
+    navigate("/");
   };
   return (
     <>
@@ -709,7 +709,7 @@ const Header = ({ isDarkMode }) => {
                     <button
                       onClick={() => {
                         sessionStorage.clear();
-                        navigate('/login');
+                        navigate('/');
                         setMobileOpen(false);
                       }}
                       className="w-full bg-[#0183FF] text-white py-2 rounded-xl font-semibold text-sm sm:text-base"
